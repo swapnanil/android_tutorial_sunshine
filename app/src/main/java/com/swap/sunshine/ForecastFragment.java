@@ -58,7 +58,7 @@ public class ForecastFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if(id == R.id.action_refresh) {
-            FetchWeatherTask weatherTask = new FetchWeatherTask();
+            FetchWeatherTask weatherTask = new FetchWeatherTask(getActivity(), mForecastAdapter);
             weatherTask.execute("700047");
             return true;
         }
@@ -93,7 +93,7 @@ public class ForecastFragment extends Fragment {
     }
 
     private void updateWeather() {
-        FetchWeatherTask weatherTask = new FetchWeatherTask();
+        FetchWeatherTask weatherTask = new FetchWeatherTask(getActivity(), mForecastAdapter);
         String location = PreferenceManager.getDefaultSharedPreferences(getActivity())
                 .getString(getString(R.string.pref_location_key),
                         getString(R.string.pref_location_default));
@@ -106,7 +106,7 @@ public class ForecastFragment extends Fragment {
         updateWeather();
     }
 
-    public class FetchWeatherTask extends AsyncTask<String, Void, String[]> {
+    /*public class FetchWeatherTask extends AsyncTask<String, Void, String[]> {
         private final String LOG_TAG = FetchWeatherTask.class.getSimpleName();
 
         @Override
@@ -214,9 +214,7 @@ public class ForecastFragment extends Fragment {
             }
         }
 
-        /* The date/time conversion code is going to be moved outside the asynctask later,
-         * so for convenience we're breaking it out into its own method now.
-         */
+
 
         private String getReadableDateString(long time){
             // Because the API returns a unix timestamp (measured in seconds),
@@ -225,9 +223,6 @@ public class ForecastFragment extends Fragment {
             return shortenedDateFormat.format(time);
         }
 
-        /**
-         * Prepare the weather high/lows for presentation.
-         */
         private String formatHighLows(double high, double low) {
             // For presentation, assume the user doesn't care about tenths of a degree.
             SharedPreferences sharedPreferences =
@@ -245,13 +240,7 @@ public class ForecastFragment extends Fragment {
             return highLowStr;
         }
 
-        /**
-         * Take the String representing the complete forecast in JSON Format and
-         * pull out the data we need to construct the Strings needed for the wireframes.
-         *
-         * Fortunately parsing is easy:  constructor takes the JSON string and converts it
-         * into an Object hierarchy for us.
-         */
+
         private String[] getWeatherDataFromJson(String forecastJsonStr, int numDays)
                 throws JSONException {
 
@@ -315,10 +304,8 @@ public class ForecastFragment extends Fragment {
                 resultStrs[i] = day + " - " + description + " - " + highAndLow;
             }
 
-            /*for (String s : resultStrs) {
-                Log.v(LOG_TAG, "Forecast entry: " + s);
-            }*/
+
             return resultStrs;
         }
-    }
+    }*/
 }
